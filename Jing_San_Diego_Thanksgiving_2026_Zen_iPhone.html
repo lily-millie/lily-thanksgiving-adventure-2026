@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f1e8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="San Diego, slowly.">
+<title>Jing & Millie · San Diego Thanksgiving 2026</title>
+<style>
+:root{
+  --ink:#2d3538;--muted:#748084;--paper:#f5f1e8;--washi:#fbf8f1;--sage:#8b9b8b;
+  --sea:#6e8d93;--sand:#c9b89d;--clay:#a7765d;--line:rgba(45,53,56,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;background:#dfdbd1;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+body{overscroll-behavior:none}
+.deck{position:relative;min-height:100vh;background:var(--paper);overflow:hidden}
+.slide{display:none;min-height:100vh;padding:clamp(24px,4vw,58px) clamp(22px,5vw,74px) 90px;position:relative;overflow:auto;align-items:center;justify-content:center}
+.slide.active{display:flex;animation:fade .5s ease}
+@keyframes fade{from{opacity:.15;transform:translateY(6px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--sea)}
+h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.04em;line-height:.96;margin:10px 0 0}
+h1{font-size:clamp(3.8rem,8vw,7.8rem)} h2{font-size:clamp(3rem,6vw,5.5rem)}
+h1 em{font-weight:400;color:var(--sea)}
+.lead{font-size:clamp(1rem,1.7vw,1.24rem);line-height:1.65;color:var(--muted);max-width:640px;margin-top:20px}
+.enso{width:86px;height:86px;border-radius:50%;border:8px solid rgba(63,79,82,.74);border-right-color:transparent;transform:rotate(-18deg)}
+.enso.big{width:150px;height:150px;border-width:12px;margin:0 auto 18px}
+
+/* cover */
+.cover{padding:0;display:none;background:#202729}
+.cover.active{display:grid;grid-template-columns:1.15fr .85fr}
+.cover-photo{height:100vh;overflow:hidden}
+.cover-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(.94)}
+.cover-panel{height:100%;padding:clamp(42px,6vw,86px);display:flex;flex-direction:column;justify-content:center;background:linear-gradient(160deg,#f7f3eb,#ebe5d9)}
+.cover-panel .enso{margin-bottom:28px}
+.cover-meta{display:flex;gap:24px;flex-wrap:wrap;margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+
+/* itinerary */
+.itinerary{background:
+  radial-gradient(circle at 15% 10%,rgba(110,141,147,.10),transparent 25rem),
+  linear-gradient(145deg,#f6f2e9,#ece8df)}
+.paper{width:min(920px,100%);background:rgba(255,255,255,.72);padding:clamp(30px,5vw,58px);border:1px solid rgba(60,70,72,.08);box-shadow:0 30px 70px rgba(44,54,56,.08)}
+.zen-line{width:80px;height:1px;background:var(--clay);margin:25px 0 28px}
+.itinerary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px}
+.itinerary-grid div{padding:16px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
+.itinerary-grid b{font-family:Georgia,serif;font-weight:500;font-size:1.03rem}
+.itinerary-grid span{font-size:.92rem;color:var(--muted)}
+blockquote{font-family:Georgia,serif;font-size:clamp(1.25rem,2vw,1.7rem);font-style:italic;line-height:1.5;color:#5b6667;margin:34px 0 0}
+
+/* journal series */
+.journal{background:
+  linear-gradient(rgba(104,117,112,.045) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(104,117,112,.045) 1px,transparent 1px),
+  #f7f4ed;background-size:32px 32px}
+.journal-layout{width:min(1160px,100%);display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(28px,5vw,70px);align-items:center}
+.journal.reverse .journal-photo{order:2} .journal.reverse .journal-copy{order:1}
+.journal-photo{position:relative}
+.journal-photo img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:saturate(.78);box-shadow:0 30px 60px rgba(55,61,59,.13)}
+.journal-photo::before{content:"";position:absolute;top:-14px;left:39%;width:115px;height:28px;background:rgba(224,213,178,.68);transform:rotate(-2deg);z-index:2}
+.journal-copy{padding:10px}
+.day{font-size:.76rem;letter-spacing:.17em;text-transform:uppercase;color:var(--clay);font-weight:800}
+.quiet-list{margin-top:28px;display:grid}
+.quiet-list p{margin:0;padding:13px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:42px 1fr;align-items:center;font-size:.96rem}
+.quiet-list span{font-family:Georgia,serif;color:var(--sea)}
+.seaworld .journal-photo img{border-radius:50% 50% 4px 4px / 15% 15% 4px 4px}
+.zoo .journal-photo img{aspect-ratio:16/11}
+.zoo .journal-copy{background:rgba(255,255,255,.58);padding:28px;border-left:3px solid var(--sage)}
+
+/* beach */
+.beach{padding:0;background:#d6d1c8}
+.beach-photo{position:absolute;inset:0}
+.beach-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(.92)}
+.beach::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,29,31,.63),rgba(21,29,31,.17) 62%,transparent)}
+.beach-overlay{position:relative;z-index:2;width:min(1100px,calc(100% - 70px));margin:auto;color:#fff;padding-right:42%;}
+.beach-overlay .eyebrow{color:rgba(255,255,255,.74)}
+.beach-overlay p{font-family:Georgia,serif;font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.55;max-width:670px;color:rgba(255,255,255,.9)}
+.soft-pill{display:inline-block;margin-top:18px;padding:10px 14px;border:1px solid rgba(255,255,255,.5);border-radius:999px;font-size:.85rem}
+
+/* museum */
+.museum{background:linear-gradient(145deg,#f2eee6,#e8eeee)}
+.museum-layout{width:min(1140px,100%);display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(30px,5vw,70px);align-items:center}
+.museum-photo{position:relative;padding:20px 0 0 20px}
+.museum-photo::before{content:"";position:absolute;inset:0 20px 20px 0;border:1px solid #9eaaa5}
+.museum-photo img{position:relative;width:100%;aspect-ratio:4/3;object-fit:cover;display:block;filter:saturate(.76)}
+.caption{position:absolute;right:18px;bottom:-18px;background:#f7f3eb;padding:10px 14px;font-family:Georgia,serif;font-style:italic;color:#68716e}
+.schedule{margin-top:28px}
+.schedule div{display:grid;grid-template-columns:112px 1fr;gap:18px;padding:12px 0;border-bottom:1px solid var(--line)}
+.schedule span{font-size:.78rem;color:var(--sea);font-weight:800} .schedule b{font-weight:600}
+.note{margin-top:22px;padding:14px 16px;border-left:2px solid var(--clay);background:rgba(255,255,255,.5);color:var(--muted);font-size:.9rem;line-height:1.55}
+
+/* closing */
+.closing{background:
+  radial-gradient(circle at 50% 35%,rgba(110,141,147,.09),transparent 24rem),
+  linear-gradient(180deg,#f5f1e8,#ebe6dc)}
+.closing-inner{width:min(800px,100%);text-align:center}
+.closing-quote{font-family:Georgia,serif;font-size:clamp(1.25rem,2.3vw,1.8rem);line-height:1.6;color:#5d6667;margin:25px auto 0}
+.haiku{display:grid;gap:6px;margin-top:34px;font-family:Georgia,serif;font-style:italic;color:#7b8584}
+.haiku span:nth-child(2){padding-left:30px} .haiku span:nth-child(3){padding-left:70px}
+
+/* nav */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(0,0,0,.05);z-index:50}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--sea),var(--sand),var(--clay));transition:width .28s}
+.nav{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:12px max(18px,env(safe-area-inset-left)) max(14px,env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;background:linear-gradient(transparent,rgba(245,241,232,.96) 42%)}
+.nav button{width:48px;height:48px;border:1px solid rgba(45,53,56,.16);border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);font-size:1.15rem}
+.nav button:disabled{opacity:.25}
+.dots{display:flex;gap:7px;align-items:center;justify-content:center;flex:1}
+.dot{width:7px!important;height:7px!important;min-width:7px!important;padding:0!important;border:0!important;background:#b5b2ab!important;border-radius:50%!important}
+.dot.active{background:var(--sea)!important;transform:scale(1.4)}
+.count{min-width:48px;text-align:right;font-size:.75rem;color:var(--muted)}
+
+/* iPad */
+@media (min-width:768px) and (max-width:1180px){
+ .slide{padding:28px 34px 84px}
+ .cover-panel{padding:56px}
+ .journal-layout,.museum-layout{gap:34px}
+ .journal-copy{padding:0}
+ .beach-overlay{width:calc(100% - 80px);padding-right:34%}
+}
+@media (orientation:portrait) and (max-width:1000px){
+ .cover.active{grid-template-columns:1fr;grid-template-rows:44vh auto}
+ .cover-photo{height:44vh}
+ .cover-panel{padding:34px 42px 90px}
+ .journal-layout,.museum-layout{grid-template-columns:1fr}
+ .journal.reverse .journal-photo,.journal.reverse .journal-copy{order:initial}
+ .journal-photo img,.museum-photo img{aspect-ratio:16/9;max-height:38vh}
+ .journal-copy{max-width:760px}
+ .beach-overlay{padding-right:8%;width:calc(100% - 60px)}
+ .museum-photo{order:-1;max-width:760px;margin:auto}
+ .itinerary-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+ .slide{padding:22px 20px 82px}
+ .cover.active{grid-template-rows:38vh auto} .cover-photo{height:38vh} .cover-panel{padding:28px 24px 86px}
+ .paper{padding:28px 22px}
+ .journal-layout,.museum-layout{grid-template-columns:1fr;gap:22px}
+ .beach-overlay{width:calc(100% - 36px);padding-right:0}
+ .schedule div{grid-template-columns:90px 1fr}
+}
+@media(prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+/* ============================================================
+   iPhone-first refinements
+   Designed around 390×844 / 430×932 portrait Safari.
+   ============================================================ */
+@supports (min-height: 100dvh){
+  .deck,.slide{min-height:100dvh}
+}
+@media (max-width: 620px){
+  html,body{
+    background:#f5f1e8;
+    -webkit-text-size-adjust:100%;
+  }
+  body{
+    padding-top:env(safe-area-inset-top);
+  }
+
+  .slide{
+    min-height:calc(100vh - env(safe-area-inset-top));
+    padding:
+      18px
+      max(18px,env(safe-area-inset-right))
+      calc(86px + env(safe-area-inset-bottom))
+      max(18px,env(safe-area-inset-left));
+    align-items:flex-start;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .eyebrow{
+    font-size:.67rem;
+    letter-spacing:.16em;
+    line-height:1.35;
+  }
+  h1{
+    font-size:clamp(3.0rem,15vw,4.25rem);
+    line-height:.93;
+  }
+  h2{
+    font-size:clamp(2.45rem,12vw,3.55rem);
+    line-height:.96;
+  }
+  .lead{
+    font-size:.98rem;
+    line-height:1.55;
+    margin-top:15px;
+  }
+
+  /* Cover becomes a clean top-photo + editorial card composition */
+  .cover.active{
+    min-height:calc(100vh - env(safe-area-inset-top));
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:32vh auto;
+    overflow:auto;
+  }
+  .cover-photo{
+    height:32vh;
+    min-height:235px;
+  }
+  .cover-photo img{
+    object-position:center 44%;
+  }
+  .cover-panel{
+    min-height:calc(68vh - env(safe-area-inset-top));
+    padding:
+      24px
+      max(22px,env(safe-area-inset-right))
+      calc(92px + env(safe-area-inset-bottom))
+      max(22px,env(safe-area-inset-left));
+    justify-content:flex-start;
+  }
+  .cover-panel .enso{
+    width:58px;height:58px;border-width:6px;margin:0 0 18px;
+  }
+  .cover-panel .lead{
+    max-width:32rem;
+  }
+  .cover-meta{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:5px;
+    margin-top:22px;
+    padding-top:14px;
+    font-size:.78rem;
+  }
+
+  /* Week overview: no floating desktop card; feel like a page in a journal */
+  .itinerary{
+    padding-top:28px;
+    background:
+      radial-gradient(circle at 14% 6%,rgba(110,141,147,.10),transparent 17rem),
+      linear-gradient(145deg,#f6f2e9,#ece8df);
+  }
+  .paper{
+    width:100%;
+    padding:24px 20px 26px;
+    box-shadow:none;
+    border-color:rgba(60,70,72,.07);
+    background:rgba(255,255,255,.64);
+  }
+  .zen-line{
+    margin:18px 0 17px;
+    width:56px;
+  }
+  .itinerary-grid{
+    grid-template-columns:1fr;
+  }
+  .itinerary-grid div{
+    padding:12px 0;
+  }
+  .itinerary-grid b{
+    font-size:.94rem;
+  }
+  .itinerary-grid span{
+    font-size:.84rem;
+  }
+  blockquote{
+    margin-top:24px;
+    font-size:1.08rem;
+    line-height:1.45;
+  }
+
+  /* Family activity slides: image remains dominant, content breathes below it */
+  .journal{
+    padding-top:20px;
+  }
+  .journal-layout{
+    width:100%;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .journal.reverse .journal-photo,
+  .journal.reverse .journal-copy{
+    order:initial;
+  }
+  .journal-photo{
+    width:100%;
+  }
+  .journal-photo::before{
+    width:82px;height:21px;top:-10px;left:38%;
+  }
+  .journal-photo img,
+  .zoo .journal-photo img{
+    width:100%;
+    aspect-ratio:16/10;
+    max-height:none;
+    box-shadow:0 16px 34px rgba(55,61,59,.11);
+  }
+  .seaworld .journal-photo img{
+    border-radius:40% 40% 4px 4px / 11% 11% 4px 4px;
+  }
+  .journal-copy{
+    padding:0 3px;
+  }
+  .zoo .journal-copy{
+    padding:18px 18px 19px;
+    border-left:2px solid var(--sage);
+  }
+  .quiet-list{
+    margin-top:19px;
+  }
+  .quiet-list p{
+    grid-template-columns:34px 1fr;
+    padding:10px 0;
+    font-size:.88rem;
+    line-height:1.4;
+  }
+
+  /* Coronado: full-image phone poster, text stays in the quiet lower-left zone */
+  .beach{
+    min-height:calc(100vh - env(safe-area-inset-top));
+    padding:0;
+    align-items:flex-end;
+  }
+  .beach-photo img{
+    object-position:center center;
+  }
+  .beach::after{
+    background:
+      linear-gradient(180deg,
+        rgba(21,29,31,.02) 0%,
+        rgba(21,29,31,.05) 38%,
+        rgba(21,29,31,.72) 78%,
+        rgba(21,29,31,.82) 100%);
+  }
+  .beach-overlay{
+    width:100%;
+    margin:0;
+    padding:
+      0
+      max(22px,env(safe-area-inset-right))
+      calc(98px + env(safe-area-inset-bottom))
+      max(22px,env(safe-area-inset-left));
+  }
+  .beach-overlay h2{
+    font-size:clamp(3.1rem,16vw,4.4rem);
+  }
+  .beach-overlay p{
+    font-size:1.02rem;
+    line-height:1.48;
+    margin:14px 0 0;
+  }
+  .soft-pill{
+    margin-top:14px;
+    padding:8px 11px;
+    font-size:.76rem;
+    background:rgba(255,255,255,.06);
+    backdrop-filter:blur(8px);
+  }
+
+  /* Museum: image first, then a very readable travel-note layout */
+  .museum{
+    padding-top:20px;
+  }
+  .museum-layout{
+    width:100%;
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .museum-photo{
+    order:-1;
+    width:100%;
+    max-width:none;
+    padding:12px 0 0 12px;
+  }
+  .museum-photo::before{
+    inset:0 12px 12px 0;
+  }
+  .museum-photo img{
+    aspect-ratio:16/10;
+    max-height:none;
+  }
+  .caption{
+    right:8px;
+    bottom:-12px;
+    font-size:.78rem;
+    padding:8px 10px;
+  }
+  .museum-copy{
+    padding:0 3px;
+  }
+  .schedule{
+    margin-top:20px;
+  }
+  .schedule div{
+    grid-template-columns:82px 1fr;
+    gap:12px;
+    padding:10px 0;
+  }
+  .schedule span{
+    font-size:.71rem;
+  }
+  .schedule b{
+    font-size:.88rem;
+    line-height:1.35;
+  }
+  .note{
+    margin-top:17px;
+    padding:12px 13px;
+    font-size:.81rem;
+  }
+
+  /* Final slide: centered, intimate, not oversized */
+  .closing{
+    align-items:center;
+  }
+  .closing-inner{
+    padding:10px 5px 28px;
+  }
+  .enso.big{
+    width:92px;height:92px;border-width:8px;margin-bottom:18px;
+  }
+  .closing h2{
+    font-size:clamp(2.8rem,13vw,3.8rem);
+  }
+  .closing-quote{
+    font-size:1.05rem;
+    line-height:1.55;
+    margin-top:20px;
+  }
+  .haiku{
+    margin-top:28px;
+    gap:5px;
+    font-size:.9rem;
+  }
+  .haiku span:nth-child(2){padding-left:18px}
+  .haiku span:nth-child(3){padding-left:36px}
+
+  /* iPhone bottom controls: thumb-friendly and safe-area aware */
+  .nav{
+    padding:
+      10px
+      max(14px,env(safe-area-inset-right))
+      max(12px,env(safe-area-inset-bottom))
+      max(14px,env(safe-area-inset-left));
+    background:linear-gradient(transparent,rgba(245,241,232,.985) 36%);
+  }
+  .nav button{
+    width:46px;height:46px;
+    min-width:46px;
+    font-size:1.05rem;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(10px);
+  }
+  .dots{
+    gap:6px;
+  }
+  .dot{
+    width:6px!important;height:6px!important;min-width:6px!important;
+  }
+  .count{
+    min-width:40px;
+    font-size:.69rem;
+  }
+
+  /* A subtle "swipe" cue only on the first slide */
+  .cover-panel::after{
+    content:"Swipe to continue  →";
+    margin-top:auto;
+    padding-top:22px;
+    color:#8c9492;
+    font-size:.72rem;
+    letter-spacing:.04em;
+  }
+}
+
+/* Shorter iPhones / landscape-like heights */
+@media (max-width:620px) and (max-height:740px){
+  .cover.active{grid-template-rows:27vh auto}
+  .cover-photo{height:27vh;min-height:190px}
+  .cover-panel{padding-top:20px}
+  .cover-panel .enso{width:48px;height:48px;margin-bottom:12px}
+  h1{font-size:3rem}
+  h2{font-size:2.55rem}
+  .lead{font-size:.9rem;line-height:1.47}
+  .journal-photo img,.zoo .journal-photo img,.museum-photo img{aspect-ratio:16/8.8}
+}
+
+/* Large iPhone Pro Max: let the design breathe slightly more */
+@media (min-width:414px) and (max-width:620px) and (min-height:880px){
+  .slide{
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
+  .cover-panel{
+    padding-left:max(28px,env(safe-area-inset-left));
+    padding-right:max(28px,env(safe-area-inset-right));
+  }
+  .journal-layout,.museum-layout{gap:24px}
+  .quiet-list p{padding:12px 0}
+}
+
+</style>
+</head>
+<body>
+<div class="progress"><span></span></div>
+<main class="deck">
+
+<section class="slide active cover">
+  <div class="cover-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Marriott_Marquis_in_San_Diego_(18844482404).jpg?width=1800" alt="San Diego marina and Marriott Marquis"></div>
+  <div class="cover-panel">
+    <div class="enso"></div>
+    <div class="eyebrow">JING + MILLIE · THANKSGIVING 2026</div>
+    <h1>San Diego,<br><em>slowly.</em></h1>
+    <p class="lead">Six days by the water. Family adventures first, then a quieter Thanksgiving rhythm for you and Millie.</p>
+    <div class="cover-meta"><span>Nov 22–27</span><span>Marina · Beach · Museum</span></div>
+  </div>
+</section>
+
+<section class="slide itinerary">
+  <div class="paper">
+    <div class="eyebrow">THE WEEK</div>
+    <h2>A gentle arc.</h2>
+    <div class="zen-line"></div>
+    <div class="itinerary-grid">
+      <div><b>Sun 11/22</b><span>Arrive · settle by the marina</span></div>
+      <div><b>Mon 11/23</b><span>LEGOLAND · all four together</span></div>
+      <div><b>Tue 11/24</b><span>SeaWorld · shows and animals</span></div>
+      <div><b>Wed 11/25</b><span>San Diego Zoo</span></div>
+      <div><b>Thu 11/26</b><span>Coronado Beach · Jing + Millie</span></div>
+      <div><b>Fri 11/27</b><span>Children’s Museum · fly home</span></div>
+    </div>
+    <blockquote>Enough structure to feel easy.<br>Enough space to feel like a vacation.</blockquote>
+  </div>
+</section>
+
+<section class="slide journal lego">
+  <div class="journal-layout">
+    <div class="journal-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Legoland_California.jpg?width=1600" alt="LEGOLAND California"></div>
+    <div class="journal-copy">
+      <div class="day">MONDAY · NOV 23</div>
+      <h2>Playful,<br>without rushing.</h2>
+      <p class="lead">LEGOLAND is the energetic day of the trip — but Gold Fastrack means the day can still feel easy.</p>
+      <div class="quiet-list">
+        <p><span>01</span> Four admission tickets</p>
+        <p><span>02</span> Gold Fastrack × 4</p>
+        <p><span>03</span> Unlimited digital photos</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide journal reverse seaworld">
+  <div class="journal-layout">
+    <div class="journal-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaWorld_San_Diego.jpg?width=1600" alt="SeaWorld San Diego"></div>
+    <div class="journal-copy">
+      <div class="day">TUESDAY · NOV 24</div>
+      <h2>Water,<br>animals, shows.</h2>
+      <p class="lead">A day built around marine animals and performances, not roller coasters. Reserved seating is already handled.</p>
+      <div class="quiet-list">
+        <p><span>01</span> Single-day admission × 4</p>
+        <p><span>02</span> Reserved show seating × 4</p>
+        <p><span>03</span> No need to chase every ride</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide journal zoo">
+  <div class="journal-layout">
+    <div class="journal-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lightmatter_lioness.jpg?width=1600" alt="Lioness at San Diego Zoo"></div>
+    <div class="journal-copy">
+      <div class="day">WEDNESDAY · NOV 25</div>
+      <h2>A day to<br>wander.</h2>
+      <p class="lead">Wednesday is the zoo day. The tickets are flexible, and the day can stay unstructured: walk, stop, watch, repeat.</p>
+      <div class="quiet-list">
+        <p><span>01</span> 2 adult + 2 child Any Day passes</p>
+        <p><span>02</span> No fixed showtime</p>
+        <p><span>03</span> Last full day with all four together</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide beach">
+  <div class="beach-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_Del_Coronado.jpg?width=1800" alt="Hotel del Coronado and Coronado Beach"></div>
+  <div class="beach-overlay">
+    <div class="eyebrow">THURSDAY · NOV 26 · THANKSGIVING</div>
+    <h2>Coronado<br>Beach.</h2>
+    <p>Dad and Lily fly to Las Vegas around midday. Your afternoon becomes simple: ocean air, soft sand, Hotel del Coronado, and nowhere else you need to be.</p>
+    <div class="soft-pill">Jing + Millie · no fixed schedule</div>
+  </div>
+</section>
+
+<section class="slide museum">
+  <div class="museum-layout">
+    <div class="museum-copy">
+      <div class="day">FRIDAY · NOV 27</div>
+      <h2>One last<br>little adventure.</h2>
+      <p class="lead">Check out, leave the bags with the hotel, then spend a few playful hours downtown with Millie before the flight home.</p>
+      <div class="schedule">
+        <div><span>By 11:00</span><b>Hotel checkout</b></div>
+        <div><span>Late morning</span><b>The New Children’s Museum</b></div>
+        <div><span>4:01 PM</span><b>United UA2117 · SAN → SFO</b></div>
+        <div><span>5:45 PM</span><b>Arrive SFO · seats 9E / 9F</b></div>
+      </div>
+      <div class="note">Thanksgiving-weekend hours can change, so check the museum schedule shortly before the trip.</div>
+    </div>
+    <div class="museum-photo">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/San_Diego_New_Children's_Museum.jpg?width=1600" alt="The New Children's Museum in San Diego">
+      <div class="caption">A softer ending to the week.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide closing">
+  <div class="closing-inner">
+    <div class="enso big"></div>
+    <div class="eyebrow">THE MOOD</div>
+    <h2>Nothing to optimize.</h2>
+    <p class="closing-quote">The first four days are the family adventure.<br>Thursday and Friday are simply time with Millie.</p>
+    <div class="haiku">
+      <span>Ocean after noise.</span>
+      <span>One small hand beside your own.</span>
+      <span>Then home before dark.</span>
+    </div>
+  </div>
+</section>
+
+</main>
+<nav class="nav" aria-label="Slideshow controls">
+  <button type="button" data-nav="prev" aria-label="Previous slide">←</button>
+  <div class="dots" aria-label="Slide navigation"></div>
+  <span class="count"></span>
+  <button type="button" data-nav="next" aria-label="Next slide">→</button>
+</nav>
+<script>
+(() => {
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.querySelector('.dots'),prev=document.querySelector('[data-nav="prev"]'),
+        next=document.querySelector('[data-nav="next"]'),count=document.querySelector('.count'),
+        bar=document.querySelector('.progress span'),deck=document.querySelector('.deck');
+  let index=0,x0=null;
+  slides.forEach((_,i)=>{
+    const b=document.createElement('button');b.type='button';b.className='dot';
+    b.setAttribute('aria-label','Go to slide '+(i+1));b.addEventListener('click',()=>show(i));dots.appendChild(b);
+  });
+  function show(i){
+    index=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,j)=>{const a=j===index;s.classList.toggle('active',a);s.setAttribute('aria-hidden',a?'false':'true');if(a)s.scrollTop=0;});
+    [...dots.children].forEach((d,j)=>d.classList.toggle('active',j===index));
+    count.textContent=(index+1)+' / '+slides.length;
+    bar.style.width=(((index+1)/slides.length)*100)+'%';
+    prev.disabled=index===0;next.disabled=index===slides.length-1;
+  }
+  prev.addEventListener('click',()=>show(index-1));next.addEventListener('click',()=>show(index+1));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown')show(index+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')show(index-1);
+  });
+  deck.addEventListener('touchstart',e=>{x0=e.changedTouches[0].clientX;},{passive:true});
+  deck.addEventListener('touchend',e=>{
+    if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>55)show(index+(dx<0?1:-1));x0=null;
+  },{passive:true});
+  show(0);
+})();
+</script>
+</body>
+</html>
