@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff8f1">
+<title>Lily's Thanksgiving Adventure · 2026</title>
+<style>
+:root{
+  --ink:#121326;--muted:#696577;--paper:#fff8f1;--pink:#ff4f8b;--yellow:#ffd447;
+  --blue:#347cff;--purple:#7554ed;--mint:#3ed9ba;--line:#e7dff1;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;background:#17162b;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif}
+body{overscroll-behavior:none}
+.deck{position:relative;width:100%;min-height:100vh;background:var(--paper);overflow:hidden}
+.slide{
+  display:none;min-height:100vh;padding:clamp(20px,3vw,42px) clamp(22px,4vw,58px) 88px;
+  align-items:center;justify-content:center;overflow:auto;
+}
+.slide.active{display:flex;animation:enter .35s ease}
+@keyframes enter{from{opacity:.2;transform:translateX(12px)}to{opacity:1;transform:none}}
+.layout{
+  width:min(1220px,100%);margin:auto;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(310px,.88fr);
+  gap:clamp(26px,4vw,54px);align-items:center;
+}
+.gallery{min-width:0}
+.hero-photo{
+  position:relative;overflow:hidden;border-radius:28px;background:#ddd;
+  aspect-ratio:16/10;box-shadow:0 24px 50px rgba(23,18,62,.18);
+}
+.hero-photo img,.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.thumb{
+  aspect-ratio:4/3;overflow:hidden;border-radius:16px;background:#ddd;border:3px solid rgba(255,255,255,.9);
+  box-shadow:0 8px 18px rgba(23,18,62,.12);
+}
+.copy{min-width:0}
+.kicker{
+  display:inline-flex;align-items:center;min-height:40px;padding:8px 12px;border-radius:999px;
+  background:#fff;color:var(--ink);font-size:.76rem;font-weight:950;letter-spacing:.09em;text-transform:uppercase;
+  box-shadow:0 7px 18px rgba(19,16,54,.09)
+}
+h1,h2{margin:14px 0 0;font-weight:950;letter-spacing:-.058em;line-height:.9}
+h1{font-size:clamp(3.25rem,7vw,7rem)} h2{font-size:clamp(2.65rem,6vw,5.7rem)}
+.lead{font-size:clamp(1rem,1.7vw,1.34rem);line-height:1.48;max-width:650px;margin:18px 0 0;font-weight:650;color:#343449}
+.bullets{display:grid;gap:9px;margin-top:20px}
+.bullet{display:flex;gap:11px;align-items:flex-start;background:rgba(255,255,255,.92);border:2px solid var(--line);padding:11px 13px;border-radius:17px;font-weight:740;line-height:1.35;box-shadow:0 7px 16px rgba(39,26,91,.05)}
+.emoji{font-size:1.3rem;line-height:1}
+.stickers{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.stickers span{padding:9px 12px;border-radius:14px;background:var(--yellow);color:var(--ink);font-weight:950;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.stickers span:nth-child(2n){background:#fff} .stickers span:nth-child(3n){background:#8ef0dd}
+.route{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.route span{background:#fff;color:var(--ink);border:3px solid var(--ink);border-radius:15px;padding:7px 12px;font-size:clamp(1.4rem,3vw,2.6rem);font-weight:950}
+.route i{font-style:normal;font-size:1.7rem;font-weight:950}
+.bigtime{font-size:clamp(1.65rem,3.5vw,3rem);font-weight:950;letter-spacing:-.045em;margin-top:13px}
+.seatbox{display:grid;gap:4px;margin-top:20px;padding:14px 16px;background:#16152b;color:#fff;border-radius:18px;box-shadow:0 10px 22px rgba(0,0,0,.12)}
+.seatbox b{font-size:1.05rem} .seatbox span{font-size:.86rem;color:#d7d2e8}
+.timepill{display:inline-block;margin-top:15px;padding:9px 12px;border-radius:999px;background:#16152b;color:#fff;font-weight:900}
+.mission-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:22px}
+.mission-list b{padding:11px 12px;border-radius:15px;background:rgba(255,255,255,.92);color:var(--ink);font-size:.95rem}
+.theme-night{background:linear-gradient(145deg,#191533,#312065);color:#fff}
+.theme-night .lead,.theme-purple .lead,.theme-blue .lead,.theme-fire .lead,.theme-omega .lead{color:rgba(255,255,255,.9)}
+.theme-night .route i,.theme-purple .route i,.theme-blue .route i,.theme-fire .route i,.theme-omega .route i{color:#fff}
+.theme-purple{background:linear-gradient(145deg,#2b205f,#5b3ca4);color:#fff}
+.theme-blue{background:linear-gradient(145deg,#0b6687,#345fc0);color:#fff}
+.theme-sky{background:linear-gradient(145deg,#edf7ff,#fff6e8)}
+.theme-omega{background:linear-gradient(145deg,#1a1838,#5a174f 58%,#085e6e);color:#fff}
+.theme-water{background:linear-gradient(145deg,#eef8ff,#d9eeff)}
+.theme-fire{background:linear-gradient(145deg,#2d1723,#6f241c);color:#fff}
+.progress{position:fixed;z-index:50;top:0;left:0;right:0;height:5px;background:rgba(255,255,255,.22)}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--mint));transition:width .25s}
+.nav{
+  position:fixed;z-index:60;left:0;right:0;bottom:0;padding:11px max(18px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:12px;background:linear-gradient(transparent,rgba(255,248,241,.97) 38%);
+}
+.nav button{width:52px;height:52px;border:0;border-radius:17px;background:#151426;color:#fff;font-size:1.35rem;cursor:pointer;box-shadow:0 7px 18px rgba(0,0,0,.14);touch-action:manipulation}
+.nav button:disabled{opacity:.22}
+.dots{display:flex;gap:6px;justify-content:center;align-items:center;flex:1;min-width:0;overflow:hidden}
+.dot{width:8px!important;height:8px!important;min-width:8px!important;padding:0!important;border:0!important;border-radius:50%!important;background:#bcb5cb!important;box-shadow:none!important}
+.dot.active{background:var(--pink)!important;transform:scale(1.45)}
+.count{min-width:48px;text-align:right;font-size:.78rem;font-weight:900;color:#6b6377}
+img{-webkit-user-drag:none;user-select:none}
+/* iPad-first tuning: landscape and portrait */
+@media (min-width: 768px) and (max-width: 1180px){
+  .slide{padding:24px 30px 82px}
+  .layout{grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr);gap:28px}
+  .hero-photo{aspect-ratio:16/10;border-radius:24px}
+  .thumbs{gap:8px;margin-top:8px}
+  .thumb{border-radius:13px}
+  h1{font-size:clamp(3.6rem,7vw,5.7rem)} h2{font-size:clamp(3rem,5.7vw,4.7rem)}
+  .lead{font-size:1.05rem;margin-top:14px;line-height:1.42}
+  .bullets{gap:7px;margin-top:15px}
+  .bullet{padding:9px 11px;font-size:.91rem}
+  .mission-list{gap:7px;margin-top:16px}
+  .mission-list b{padding:9px 10px;font-size:.88rem}
+  .seatbox{margin-top:15px}
+}
+@media (orientation: portrait) and (max-width: 900px){
+  .slide{align-items:flex-start;padding:20px 24px 88px}
+  .layout{grid-template-columns:1fr;gap:18px}
+  .gallery{width:100%}
+  .hero-photo{aspect-ratio:16/8.4;max-height:36vh}
+  .thumb{aspect-ratio:16/9}
+  h1{font-size:clamp(3.2rem,9vw,5.3rem)} h2{font-size:clamp(2.7rem,8vw,4.5rem)}
+  .copy{padding-bottom:10px}
+  .lead{font-size:1rem}
+  .bullets{grid-template-columns:1fr 1fr}
+  .bullet:last-child:nth-child(odd){grid-column:1/-1}
+}
+@media (max-width: 620px){
+  .layout{grid-template-columns:1fr}
+  .hero-photo{aspect-ratio:16/9}
+  .thumbs{gap:6px} .thumb{border-radius:11px;border-width:2px}
+  .bullets{grid-template-columns:1fr!important}
+  .slide{padding:18px 18px 85px}
+  h1{font-size:3.15rem} h2{font-size:2.75rem}
+}
+@media (prefers-reduced-motion: reduce){.slide.active{animation:none}}
+
+/* Tap-to-enlarge gallery */
+.gallery img{cursor:zoom-in}
+.gallery img:focus-visible{outline:4px solid #ffd447;outline-offset:3px}
+
+/* iPad-friendly image lightbox */
+.lightbox{
+  position:fixed;inset:0;z-index:1000;display:none;
+  background:rgba(8,8,18,.94);
+  padding:max(18px,env(safe-area-inset-top)) max(18px,env(safe-area-inset-right))
+          max(18px,env(safe-area-inset-bottom)) max(18px,env(safe-area-inset-left));
+  align-items:center;justify-content:center;
+}
+.lightbox.open{display:flex}
+.lightbox-stage{
+  position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;touch-action:pan-x pan-y;
+}
+.lightbox img{
+  max-width:94%;max-height:88%;object-fit:contain;border-radius:16px;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+  transform:scale(1);transform-origin:center center;
+  transition:transform .16s ease;
+  cursor:zoom-in;user-select:none;-webkit-user-drag:none;
+}
+.lightbox img.zoomed{cursor:zoom-out}
+.lightbox-close,.lightbox-nav,.lightbox-zoom{
+  position:absolute;z-index:3;border:0;background:rgba(255,255,255,.94);color:#121326;
+  min-width:50px;height:50px;border-radius:16px;font-size:1.35rem;font-weight:900;
+  display:grid;place-items:center;box-shadow:0 10px 28px rgba(0,0,0,.24);touch-action:manipulation;
+}
+.lightbox-close{top:12px;right:12px}
+.lightbox-nav.prev{left:12px;top:50%;transform:translateY(-50%)}
+.lightbox-nav.next{right:12px;top:50%;transform:translateY(-50%)}
+.lightbox-tools{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:4;
+}
+.lightbox-tools .lightbox-zoom{position:static}
+.lightbox-caption{
+  position:absolute;left:50%;top:12px;transform:translateX(-50%);
+  max-width:64%;padding:8px 12px;border-radius:999px;
+  background:rgba(0,0,0,.46);color:white;font-size:.9rem;font-weight:800;text-align:center;
+}
+@media (max-width:700px){
+  .lightbox-caption{max-width:58%;font-size:.78rem}
+  .lightbox-nav{display:none}
+}
+
+
+/* Readable cards on dark slides */
+.bullet{color:var(--ink)}
+
+/* Omega Mart redesign */
+.omega-redesign{
+  background:
+    radial-gradient(circle at 12% 12%,rgba(255,218,77,.20),transparent 24rem),
+    radial-gradient(circle at 92% 80%,rgba(76,221,196,.18),transparent 28rem),
+    linear-gradient(145deg,#18162f,#3b1a58 56%,#115768);
+}
+.omega-redesign .lead{color:rgba(255,255,255,.9)}
+.omega-logo{
+  display:inline-block;margin-top:16px;padding:7px 10px 6px;
+  background:#ffd84d;color:#17152b;border:3px solid #17152b;border-radius:10px;
+  font-size:.86rem;font-weight:1000;letter-spacing:.12em;transform:rotate(-1deg);
+  box-shadow:5px 5px 0 rgba(255,255,255,.18);
+}
+.omega-redesign h2{
+  font-size:clamp(2.7rem,5.4vw,5.2rem);
+  margin-top:13px;
+}
+.omega-steps{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:20px;
+}
+.omega-step{
+  color:#161426;padding:12px;border-radius:16px;min-height:112px;
+  display:grid;align-content:start;box-shadow:0 8px 20px rgba(0,0,0,.10);
+}
+.omega-step span{
+  width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  background:#17152b;color:white;font-weight:950;font-size:.78rem;margin-bottom:8px;
+}
+.omega-step b{font-size:.9rem;letter-spacing:.05em}
+.omega-step small{font-size:.78rem;line-height:1.3;margin-top:4px;font-weight:720}
+.omega-step.store{background:#ffd84d}
+.omega-step.portal{background:#f8f5ff}
+.omega-step.weird{background:#8af0dc}
+.omega-footer{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.omega-note{
+  padding:9px 11px;border-radius:999px;background:rgba(255,255,255,.14);
+  color:#fff;font-size:.82rem;font-weight:850;border:1px solid rgba(255,255,255,.18)
+}
+@media (min-width:768px) and (max-width:1180px){
+  .omega-redesign h2{font-size:clamp(2.8rem,5vw,4.4rem)}
+  .omega-steps{gap:7px}
+  .omega-step{min-height:96px;padding:10px}
+  .omega-step small{font-size:.72rem}
+}
+@media (orientation:portrait) and (max-width:900px){
+  .omega-redesign .hero-photo{max-height:34vh}
+  .omega-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .omega-redesign h2{font-size:clamp(2.6rem,7vw,4rem)}
+}
+@media (max-width:620px){
+  .omega-steps{grid-template-columns:1fr}
+  .omega-step{min-height:auto}
+}
+
+
+/* ============================================================
+   v7: Artistic iPad edition
+   Same content, but the visual language changes every 2–3 slides.
+   ============================================================ */
+
+.slide{
+  isolation:isolate;
+  --card:#fff;
+  --accent:var(--pink);
+  --accent2:var(--yellow);
+}
+.slide::before,.slide::after{pointer-events:none}
+
+/* Shared artistic touches */
+.art-poster .hero-photo,.art-scrap .hero-photo,.art-magazine .hero-photo,
+.art-expedition .hero-photo,.art-theater .hero-photo,.art-postcard .hero-photo{
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+@media (hover:hover) and (pointer:fine){
+  .gallery img:hover{filter:saturate(1.08)}
+  .hero-photo:hover{transform:translateY(-3px)}
+}
+
+/* ---------- 1–2: bold travel-poster / stamp-board ---------- */
+.art-poster{
+  background:
+    radial-gradient(circle at 82% 14%,rgba(255,211,71,.18),transparent 24rem),
+    radial-gradient(circle at 12% 86%,rgba(67,221,190,.14),transparent 26rem),
+    linear-gradient(145deg,#17152d,#30225d);
+  color:#fff;
+}
+.art-poster .layout{
+  grid-template-columns:minmax(0,.96fr) minmax(340px,1.04fr);
+  gap:clamp(28px,4.5vw,62px);
+}
+.art-poster .gallery{
+  position:relative;padding:18px 28px 28px 8px;
+}
+.art-poster .hero-photo{
+  aspect-ratio:4/5;border-radius:8px;
+  transform:rotate(-2.2deg);
+  border:10px solid #fff;
+  box-shadow:0 32px 70px rgba(0,0,0,.34);
+}
+.art-poster .thumbs{
+  position:absolute;right:-5px;bottom:0;width:55%;display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:8px;transform:rotate(2deg);
+}
+.art-poster .thumb{
+  border:6px solid #fff;border-radius:7px;aspect-ratio:1/1;
+  box-shadow:0 13px 26px rgba(0,0,0,.22);
+}
+.art-poster .thumb:nth-child(1){transform:rotate(-5deg) translateY(-8px)}
+.art-poster .thumb:nth-child(2){transform:rotate(3deg) translateY(4px)}
+.art-poster .thumb:nth-child(3){transform:rotate(-2deg) translateY(-2px)}
+.art-poster .copy{position:relative}
+.art-poster .copy::before{
+  content:"THANKSGIVING • 2026";display:inline-block;margin-bottom:12px;
+  font-size:.72rem;letter-spacing:.22em;font-weight:950;color:#17152d;
+  background:var(--yellow);padding:7px 10px;border-radius:3px;
+  transform:rotate(-1.4deg);
+}
+.art-poster h1,.art-poster h2{
+  text-shadow:0 7px 24px rgba(0,0,0,.22);
+}
+.art-poster .lead{color:rgba(255,255,255,.9)}
+.art-poster .stickers span{
+  border-radius:999px;border:2px solid rgba(255,255,255,.26);
+}
+.art-missions .gallery{padding-right:10px}
+.art-missions .hero-photo{
+  aspect-ratio:16/12;transform:rotate(1.4deg);
+  border-radius:22px;border-width:7px;
+}
+.art-missions .thumbs{
+  position:static;width:auto;margin-top:12px;transform:none;
+}
+.art-missions .thumb{border-width:4px;border-radius:14px}
+.art-missions .mission-list{
+  grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+}
+.art-missions .mission-list b{
+  min-height:64px;display:grid;place-items:center;text-align:center;
+  border:3px solid #17152d;box-shadow:5px 5px 0 rgba(255,212,71,.85);
+  border-radius:12px;font-size:.86rem;
+}
+.art-missions .mission-list b:nth-child(3n+1){transform:rotate(-2deg)}
+.art-missions .mission-list b:nth-child(3n+2){transform:rotate(1.5deg);background:#8ef0dd}
+.art-missions .mission-list b:nth-child(3n){transform:rotate(-.7deg);background:#ffd84d}
+
+/* ---------- 3–5: premium scrapbook / travel journal ---------- */
+.art-scrap{
+  color:var(--ink);
+  background:
+    linear-gradient(rgba(35,28,71,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(35,28,71,.035) 1px,transparent 1px),
+    #fbf7ef;
+  background-size:28px 28px;
+}
+.art-scrap::before{
+  content:"SAN DIEGO";position:absolute;top:32px;right:38px;z-index:-1;
+  font-weight:1000;font-size:clamp(4rem,10vw,9rem);letter-spacing:-.07em;
+  color:rgba(117,84,237,.055);transform:rotate(90deg) translateX(40%);
+  transform-origin:top right;
+}
+.art-scrap .layout{grid-template-columns:minmax(0,1.02fr) minmax(330px,.98fr)}
+.art-scrap .gallery{position:relative;padding:14px 16px 14px 4px}
+.art-scrap .hero-photo{
+  border-radius:4px;border:12px solid #fff;aspect-ratio:4/3;
+  transform:rotate(-1.4deg);box-shadow:0 22px 42px rgba(61,49,89,.16);
+}
+.art-scrap .hero-photo::after{
+  content:"";position:absolute;top:-17px;left:42%;width:112px;height:30px;
+  background:rgba(255,222,117,.76);transform:rotate(1deg);
+  box-shadow:0 2px 4px rgba(0,0,0,.05);
+}
+.art-scrap .thumbs{gap:12px;margin-top:16px}
+.art-scrap .thumb{
+  border-radius:4px;border:8px solid #fff;box-shadow:0 12px 22px rgba(61,49,89,.13);
+}
+.art-scrap .thumb:nth-child(1){transform:rotate(-3deg)}
+.art-scrap .thumb:nth-child(2){transform:rotate(2deg) translateY(4px)}
+.art-scrap .thumb:nth-child(3){transform:rotate(-1.5deg)}
+.art-scrap .copy{
+  background:rgba(255,255,255,.78);backdrop-filter:blur(5px);
+  padding:22px 24px;border-radius:28px;border:1px solid rgba(58,44,90,.08);
+  box-shadow:0 18px 40px rgba(58,44,90,.08);
+}
+.art-scrap .kicker{
+  box-shadow:none;border:2px solid #18162d;background:#fff9d7;
+}
+.art-scrap .bullet{
+  border:0;border-radius:5px;box-shadow:5px 6px 0 rgba(31,25,55,.06);
+}
+.art-scrap .bullet:nth-child(3n+1){background:#fff0a8;transform:rotate(-.35deg)}
+.art-scrap .bullet:nth-child(3n+2){background:#d9f7f0;transform:rotate(.25deg)}
+.art-scrap .bullet:nth-child(3n){background:#f4e7ff;transform:rotate(-.15deg)}
+.art-seaworld .layout{
+  grid-template-areas:"copy gallery";
+  grid-template-columns:minmax(330px,.88fr) minmax(0,1.12fr);
+}
+.art-seaworld .gallery{grid-area:gallery}
+.art-seaworld .copy{grid-area:copy}
+.art-seaworld .hero-photo{transform:rotate(1.3deg)}
+.art-zoo .layout{
+  grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);
+}
+.art-zoo .hero-photo{aspect-ratio:16/10;transform:rotate(-.5deg)}
+.art-zoo .thumbs{
+  grid-template-columns:1.2fr .8fr 1fr;
+}
+.art-zoo .copy{
+  transform:translateX(-34px);z-index:3;border:2px solid #fff;
+}
+
+/* ---------- 6–7: cinematic / boarding-pass / neon screen ---------- */
+.art-cinema{
+  color:#fff;overflow:hidden;
+}
+.art-cinema .layout{
+  grid-template-columns:1fr;
+  gap:18px;
+}
+.art-cinema .gallery{
+  display:grid;grid-template-columns:2.3fr 1fr;gap:12px;
+}
+.art-cinema .hero-photo{
+  aspect-ratio:16/7;border-radius:28px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 28px 60px rgba(0,0,0,.28);
+}
+.art-cinema .thumbs{
+  margin:0;grid-template-columns:1fr;gap:10px;
+}
+.art-cinema .thumb{aspect-ratio:16/8;border:2px solid rgba(255,255,255,.78)}
+.art-cinema .copy{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.8fr);
+  align-items:end;gap:26px;
+}
+.art-cinema .copy .kicker,.art-cinema .copy h2{grid-column:1}
+.art-cinema .copy .lead,.art-cinema .copy .seatbox,
+.art-cinema .copy .route,.art-cinema .copy .bigtime{grid-column:2}
+.art-flight{
+  background:
+    radial-gradient(circle at 20% 10%,rgba(98,225,236,.22),transparent 24rem),
+    linear-gradient(145deg,#0c5f7d,#2c52ad);
+}
+.art-flight .copy{
+  background:#fff;color:#17162b;border-radius:22px;padding:18px 24px;
+  box-shadow:0 18px 42px rgba(0,0,0,.17);
+  position:relative;
+}
+.art-flight .copy::before,.art-flight .copy::after{
+  content:"";position:absolute;top:50%;width:24px;height:24px;border-radius:50%;background:#2454a7;transform:translateY(-50%);
+}
+.art-flight .copy::before{left:-12px}.art-flight .copy::after{right:-12px}
+.art-flight .lead{color:#38364a}
+.art-flight .route i{color:#17162b}
+.art-flight .bigtime{align-self:center}
+.art-sphere{
+  background:
+    radial-gradient(circle at 78% 35%,rgba(255,98,207,.25),transparent 21rem),
+    radial-gradient(circle at 18% 20%,rgba(94,194,255,.2),transparent 24rem),
+    #10101d;
+}
+.art-sphere .gallery{
+  position:relative;padding:7px;border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border-radius:32px;
+}
+.art-sphere .hero-photo{border-radius:25px}
+.art-sphere .copy{
+  grid-template-columns:1fr 1fr;
+}
+.art-sphere .seatbox{
+  background:linear-gradient(135deg,#ff4f8b,#7554ed);
+  border:1px solid rgba(255,255,255,.18);
+}
+.art-sphere .copy::after{
+  content:"IMMERSIVE • HUGE • WEIRD • AWESOME";
+  grid-column:1/-1;font-size:.7rem;letter-spacing:.2em;font-weight:900;color:#a7a0c8;margin-top:2px;
+}
+
+/* ---------- 8–10: magazine editorial / feature-story ---------- */
+.art-magazine{
+  color:var(--ink);
+}
+.art-magazine .layout{
+  grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);
+  position:relative;
+}
+.art-magazine .copy{order:1}
+.art-magazine .gallery{order:2}
+.art-magazine .kicker{
+  background:transparent;border:0;border-radius:0;box-shadow:none;
+  border-bottom:4px solid var(--accent);padding:0 0 6px;
+}
+.art-magazine h2{
+  font-family:Georgia,"Times New Roman",serif;font-weight:800;letter-spacing:-.05em;
+}
+.art-magazine .hero-photo{
+  aspect-ratio:5/4;border-radius:0 40px 0 40px;
+}
+.art-magazine .thumbs{
+  grid-template-columns:repeat(3,1fr);gap:0;margin-top:0;
+  border-left:8px solid #fff;border-right:8px solid #fff;
+}
+.art-magazine .thumb{
+  border-radius:0;border:0;border-right:6px solid #fff;
+}
+.art-magazine .thumb:last-child{border-right:0}
+.art-magazine .lead::first-letter{
+  float:left;font-family:Georgia,serif;font-size:3.3rem;line-height:.75;font-weight:800;
+  margin:9px 7px 0 0;color:var(--accent);
+}
+.art-venetian{
+  --accent:#247b93;
+  background:linear-gradient(120deg,#eef8ff 0 52%,#fff6e8 52%);
+}
+.art-venetian .copy::before{
+  content:"FRIDAY FEATURE";display:block;font-size:.7rem;letter-spacing:.25em;font-weight:950;color:#247b93;margin-bottom:15px;
+}
+.art-venetian .gallery{transform:translateY(12px)}
+.art-venetian .hero-photo{transform:rotate(1deg)}
+.art-o{
+  --accent:#177ea7;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(57,173,220,.22),transparent 24rem),
+    linear-gradient(145deg,#effaff,#d9efff);
+}
+.art-o .gallery{order:1}
+.art-o .copy{order:2;padding-left:10px}
+.art-o .hero-photo{border-radius:50% 50% 14px 14px / 28% 28% 14px 14px}
+.art-o .thumbs{border:0;gap:10px;margin-top:12px}
+.art-o .thumb{border:4px solid #fff;border-radius:50%;aspect-ratio:1/1}
+.art-o .seatbox{border-radius:999px;padding:12px 17px;background:#0d4565}
+.art-omega.omega-redesign .layout{
+  grid-template-columns:minmax(0,1.04fr) minmax(340px,.96fr);
+}
+.art-omega.omega-redesign .hero-photo{
+  border-radius:28px 6px 28px 6px;transform:rotate(-.6deg);
+}
+.art-omega.omega-redesign .thumb:nth-child(1){transform:translateY(-5px)}
+.art-omega.omega-redesign .thumb:nth-child(2){transform:translateY(5px)}
+.art-omega.omega-redesign .thumb:nth-child(3){transform:translateY(-2px)}
+.art-omega .omega-logo{font-family:Georgia,serif}
+
+/* ---------- 11: field-notebook / engineering expedition ---------- */
+.art-expedition{
+  background:
+    linear-gradient(rgba(17,75,110,.065) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(17,75,110,.065) 1px,transparent 1px),
+    #eef6f4;
+  background-size:24px 24px;color:#14323e;
+}
+.art-expedition .layout{grid-template-columns:minmax(0,1fr) minmax(340px,.9fr)}
+.art-expedition .gallery{
+  display:grid;grid-template-columns:1.35fr .65fr;gap:12px;
+  background:#e5f1ef;border:2px solid #a8c9c8;padding:14px;border-radius:6px;
+  box-shadow:14px 14px 0 rgba(34,91,107,.09);
+}
+.art-expedition .hero-photo{
+  aspect-ratio:3/4;border-radius:3px;border:2px solid #98bdba;box-shadow:none;
+}
+.art-expedition .thumbs{
+  margin:0;grid-template-columns:1fr;gap:10px;
+}
+.art-expedition .thumb{
+  aspect-ratio:4/3;border-radius:3px;border:2px solid #98bdba;box-shadow:none;
+}
+.art-expedition .copy{
+  background:#fffef7;border:1px solid #d9d3bd;padding:24px 26px;
+  box-shadow:10px 12px 0 rgba(80,72,43,.08);transform:rotate(.5deg);
+}
+.art-expedition .copy::before{
+  content:"FIELD NOTES / HOOVER DAM";display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.72rem;letter-spacing:.1em;color:#2f6b78;border-bottom:1px dashed #8baeb1;padding-bottom:8px;margin-bottom:12px;
+}
+.art-expedition h2{
+  font-family:Georgia,"Times New Roman",serif;letter-spacing:-.04em;
+}
+.art-expedition .bullet{
+  border:0;border-bottom:1px solid #d8e1df;border-radius:0;box-shadow:none;background:transparent;padding:9px 2px;
+}
+.art-expedition .bullet .emoji{
+  width:30px;height:30px;border:1px solid #6b9fa2;border-radius:50%;display:grid;place-items:center;font-size:1rem;
+}
+
+/* ---------- 12: theatrical poster / film stills ---------- */
+.art-theater{
+  background:
+    radial-gradient(circle at 72% 32%,rgba(210,57,34,.25),transparent 25rem),
+    linear-gradient(145deg,#160d12,#3b1114 65%,#0e0b10);
+  color:#fff;
+}
+.art-theater .layout{
+  grid-template-columns:minmax(330px,.78fr) minmax(0,1.22fr);
+}
+.art-theater .copy{order:1;position:relative;padding:22px 0 22px 18px}
+.art-theater .gallery{order:2}
+.art-theater .copy::before{
+  content:"TONIGHT";display:block;font-size:.68rem;letter-spacing:.3em;color:#ffb2a3;font-weight:950;margin-bottom:16px;
+}
+.art-theater h2{
+  font-family:Georgia,"Times New Roman",serif;font-size:clamp(4rem,8vw,7.6rem);
+  font-style:italic;font-weight:800;letter-spacing:-.07em;
+}
+.art-theater .lead{color:#f4e7e5}
+.art-theater .hero-photo{
+  aspect-ratio:16/9;border-radius:2px;border:8px solid #f7efe9;
+  box-shadow:0 26px 60px rgba(0,0,0,.45);transform:rotate(1deg);
+}
+.art-theater .thumbs{gap:10px;margin-top:16px}
+.art-theater .thumb{
+  border:5px solid #f7efe9;border-radius:2px;filter:saturate(.8) contrast(1.05);
+}
+.art-theater .thumb:nth-child(1){transform:rotate(-2deg)}
+.art-theater .thumb:nth-child(2){transform:rotate(1.5deg) translateY(4px)}
+.art-theater .thumb:nth-child(3){transform:rotate(-.5deg)}
+.art-theater .seatbox{
+  background:#efe7df;color:#1b1213;border-radius:2px;border-left:7px solid #c53725;
+}
+.art-theater .seatbox span{color:#5e4c4c}
+
+/* ---------- 13: souvenir postcard / memory collage ---------- */
+.art-postcard{
+  background:
+    radial-gradient(circle at 15% 20%,rgba(255,212,71,.27),transparent 22rem),
+    radial-gradient(circle at 92% 82%,rgba(62,217,186,.2),transparent 25rem),
+    #fff8ef;
+  color:var(--ink);
+}
+.art-postcard .layout{
+  grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);
+}
+.art-postcard .gallery{
+  display:grid;grid-template-columns:1.3fr .7fr;grid-template-rows:1fr 1fr;gap:12px;
+  transform:rotate(-.7deg);
+}
+.art-postcard .hero-photo{
+  grid-row:1/3;aspect-ratio:auto;height:100%;min-height:470px;
+  border-radius:5px;border:10px solid white;box-shadow:0 20px 38px rgba(38,30,69,.14);
+}
+.art-postcard .thumbs{
+  display:contents;
+}
+.art-postcard .thumb{
+  border-radius:5px;border:8px solid white;box-shadow:0 13px 26px rgba(38,30,69,.12);
+}
+.art-postcard .thumb:nth-child(1){grid-column:2;grid-row:1}
+.art-postcard .thumb:nth-child(2){grid-column:2;grid-row:2}
+.art-postcard .thumb:nth-child(3){display:none}
+.art-postcard .copy{
+  background:#fff;border:2px solid #221f31;padding:26px;border-radius:4px;
+  box-shadow:8px 8px 0 #ffd84d;transform:rotate(.8deg);
+}
+.art-postcard .copy::before{
+  content:"LAS VEGAS → SAN FRANCISCO";display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:.7rem;letter-spacing:.12em;border-bottom:1px dashed #afa8a0;padding-bottom:9px;margin-bottom:14px;
+}
+.art-postcard h2{font-family:Georgia,"Times New Roman",serif}
+.art-postcard .route i{color:var(--ink)}
+.art-postcard .stickers span{border:2px solid #201d30;box-shadow:3px 3px 0 #201d30}
+
+/* iPad refinements for the artistic layouts */
+@media (min-width:768px) and (max-width:1180px){
+  .art-poster .layout{grid-template-columns:.93fr 1.07fr;gap:28px}
+  .art-poster .hero-photo{border-width:8px}
+  .art-poster .thumb{border-width:4px}
+  .art-missions .mission-list{gap:8px}
+  .art-missions .mission-list b{font-size:.78rem;min-height:58px}
+  .art-scrap .copy{padding:18px}
+  .art-zoo .copy{transform:translateX(-24px)}
+  .art-cinema .gallery{grid-template-columns:2.45fr .85fr}
+  .art-cinema .copy{gap:20px}
+  .art-magazine .layout{grid-template-columns:minmax(300px,.84fr) minmax(0,1.16fr)}
+  .art-expedition .layout{grid-template-columns:1.04fr .96fr;gap:26px}
+  .art-theater .layout{grid-template-columns:.76fr 1.24fr}
+  .art-postcard .hero-photo{min-height:390px}
+}
+
+/* Portrait iPad: preserve distinct personalities instead of collapsing everything identically */
+@media (orientation:portrait) and (min-width:700px) and (max-width:1000px){
+  .art-poster .layout,.art-scrap .layout,.art-cinema .layout,.art-magazine .layout,
+  .art-expedition .layout,.art-theater .layout,.art-postcard .layout{
+    grid-template-columns:1fr;
+  }
+
+  .art-poster .gallery{width:min(78%,680px);margin:0 auto;padding-bottom:36px}
+  .art-poster .hero-photo{aspect-ratio:16/10}
+  .art-poster .thumbs{width:52%}
+  .art-poster .copy{text-align:center}
+  .art-poster .stickers,.art-poster .route{justify-content:center}
+
+  .art-scrap .layout{grid-template-areas:none}
+  .art-scrap .gallery,.art-scrap .copy{grid-area:auto}
+  .art-seaworld .copy{order:2}.art-seaworld .gallery{order:1}
+  .art-scrap .gallery{width:92%;margin:0 auto}
+  .art-scrap .copy{transform:none!important;margin-top:-8px}
+
+  .art-cinema .gallery{grid-template-columns:1fr}
+  .art-cinema .thumbs{grid-template-columns:repeat(3,1fr)}
+  .art-cinema .copy{grid-template-columns:1fr 1fr}
+  .art-cinema .copy h2{font-size:clamp(2.9rem,7vw,4.5rem)}
+
+  .art-magazine .gallery,.art-magazine .copy{order:initial}
+  .art-magazine .hero-photo{aspect-ratio:16/8.5}
+  .art-magazine .copy{padding:0 8px}
+
+  .art-expedition .gallery{grid-template-columns:1.5fr .5fr}
+  .art-expedition .hero-photo{aspect-ratio:4/3}
+  .art-expedition .copy{transform:none}
+
+  .art-theater .gallery{order:1}.art-theater .copy{order:2;text-align:center}
+  .art-theater .copy::before{margin-top:4px}
+  .art-theater .seatbox{max-width:580px;margin-left:auto;margin-right:auto;text-align:left}
+
+  .art-postcard .gallery{min-height:390px}
+  .art-postcard .copy{transform:none}
+}
+
+/* Small-screen fallback */
+@media (max-width:699px){
+  .art-poster .layout,.art-scrap .layout,.art-cinema .layout,.art-magazine .layout,
+  .art-expedition .layout,.art-theater .layout,.art-postcard .layout{grid-template-columns:1fr}
+  .art-poster .gallery,.art-scrap .gallery{padding:0}
+  .art-poster .hero-photo,.art-scrap .hero-photo{transform:none}
+  .art-poster .thumbs{position:static;width:auto;transform:none;margin-top:8px}
+  .art-scrap .copy,.art-flight .copy,.art-expedition .copy,.art-postcard .copy{transform:none}
+  .art-seaworld .layout{grid-template-areas:none}.art-seaworld .gallery,.art-seaworld .copy{grid-area:auto}
+  .art-zoo .copy{transform:none}
+  .art-cinema .gallery{grid-template-columns:1fr}.art-cinema .thumbs{grid-template-columns:repeat(3,1fr)}
+  .art-cinema .copy{grid-template-columns:1fr}
+  .art-cinema .copy>*{grid-column:1!important}
+  .art-magazine .gallery,.art-magazine .copy,.art-theater .gallery,.art-theater .copy{order:initial}
+  .art-expedition .gallery{grid-template-columns:1fr}.art-expedition .thumbs{grid-template-columns:repeat(3,1fr)}
+  .art-postcard .gallery{grid-template-columns:1fr}.art-postcard .hero-photo{grid-row:auto;min-height:auto;aspect-ratio:16/9}
+  .art-postcard .thumbs{display:grid;grid-template-columns:repeat(3,1fr)}.art-postcard .thumb:nth-child(3){display:block}
+}
+
+
+body[data-deck-style="poster"] .nav button,
+body[data-deck-style="cinema"] .nav button,
+body[data-deck-style="theater"] .nav button{background:#fff;color:#161426}
+body[data-deck-style="poster"] .nav,
+body[data-deck-style="cinema"] .nav,
+body[data-deck-style="theater"] .nav{
+  background:linear-gradient(transparent,rgba(17,15,31,.92) 42%);
+}
+body[data-deck-style="poster"] .count,
+body[data-deck-style="cinema"] .count,
+body[data-deck-style="theater"] .count{color:#fff}
+body[data-deck-style="poster"] .dot,
+body[data-deck-style="cinema"] .dot,
+body[data-deck-style="theater"] .dot{background:#6d6880!important}
+body[data-deck-style="poster"] .dot.active,
+body[data-deck-style="cinema"] .dot.active,
+body[data-deck-style="theater"] .dot.active{background:#ffd447!important}
+
+</style>
+</head>
+<body>
+<div class="progress"><span></span></div>
+<main class="deck">
+
+<section class="slide active theme-night art-poster art-cover">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="Las Vegas Sphere photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Sphere_(54760281448).jpg?width=1800" alt="Las Vegas Sphere"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_to_Legoland_California_in_2012_(9633968921).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaWorld_San_Diego.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hoover_Dam.jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">✨ Lily’s Thanksgiving Adventure</span>
+      <h1>San Diego<br>+ Vegas!</h1>
+      <p class="lead">Nov 22–29 · LEGO worlds, dolphins, lions, Venice in Vegas, a giant glowing Sphere, a secret supermarket, water acrobatics, Hoover Dam and KÀ.</p>
+      <div class="stickers"><span>8 DAYS</span><span>2 CITIES</span><span>BIG ADVENTURE</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-purple art-poster art-missions">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="The Venetian and trip highlights photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_exterior_and_gondola_ride.jpg?width=1600" alt="The Venetian and trip highlights"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Legoland_California_(5477836327).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SanDiegoZoo-Panda.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Sphere_(54760281448).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">🗺️ Adventure map</span>
+      <h2>Your missions.</h2>
+      <div class="mission-list">
+        <b>🧱 LEGOLAND</b><b>🐬 SeaWorld</b><b>🦁 San Diego Zoo</b>
+        <b>🏛️ The Venetian</b><b>🌪️ Sphere</b><b>🛒 Omega Mart</b>
+        <b>💧 O</b><b>⚡ Hoover Dam</b><b>🔥 KÀ</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide art-scrap art-lego">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="LEGOLAND California photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_to_Legoland_California_in_2012_(9633968921).jpg?width=1600" alt="LEGOLAND California"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Legoland_California_(5477836327).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Lego_Movie_movie_set_at_legoland_ca_DSC_8587_(14684885111).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/LEGO_Venetian_(33193006434).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">MON · NOV 23</span>
+      <h2>LEGOLAND!</h2>
+      <p class="lead">A whole day where almost everything looks like it was built from LEGO bricks.</p>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">⚡</span><span><b>Gold Fastrack</b> is already booked for all four of you.</span></div>
+        <div class="bullet"><span class="emoji">🏙️</span><span>Look for <b>MINILAND</b> — tiny cities made from millions of bricks.</span></div>
+        <div class="bullet"><span class="emoji">📸</span><span>You also have <b>unlimited digital photos</b> for the day.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide art-scrap art-seaworld">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="SeaWorld San Diego photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaWorld_San_Diego.jpg?width=1600" alt="SeaWorld San Diego"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Dolphin_looks_at_Guest_-_SeaWorld_San_Diego.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Orca_Landing_-_SeaWorld_San_Diego.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SLL_at_SeaWorld_San_Diego.jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">TUE · NOV 24</span>
+      <h2>SeaWorld.</h2>
+      <p class="lead">Animals and shows are the main event — no roller-coaster bravery required.</p>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">🐬</span><span>Dolphins and marine animals up close.</span></div>
+        <div class="bullet"><span class="emoji">🎟️</span><span><b>Reserved show seating</b> is already booked for all four of you.</span></div>
+        <div class="bullet"><span class="emoji">😌</span><span>We can focus on the fun parts instead of waiting in long ride lines.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide art-scrap art-zoo">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="San Diego Zoo animals photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lightmatter_lioness.jpg?width=1600" alt="San Diego Zoo animals"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SanDiegoZoo-Panda.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Elephants_at_San_Diego_Zoo.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gorilla_at_the_San_Diego_Zoo.jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">WED · NOV 25</span>
+      <h2>Zoo day.</h2>
+      <p class="lead">The day before Vegas: wander, take photos, find your favorite animals and don’t rush.</p>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">🐼</span><span>Pandas, elephants, gorillas, big cats and lots more.</span></div>
+        <div class="bullet"><span class="emoji">🎫</span><span>Your <b>Any Day</b> tickets are ready — Wednesday is our zoo day.</span></div>
+        <div class="bullet"><span class="emoji">📷</span><span>Mission: pick one animal for the best photo of the day.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-blue art-cinema art-flight">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="The Venetian Resort Las Vegas photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_Las_Vegas_(29899096854).jpg?width=1600" alt="The Venetian Resort Las Vegas"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Actual_Venetian_gondola_at_the_Grand_Canal_Shoppes,_Las_Vegas.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_exterior_and_gondola_ride.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Venetian_Gondolas_(8226785815).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">THU · NOV 26 · THANKSGIVING</span>
+      <h2>Dad + Lily<br>fly to Vegas.</h2>
+      <div class="route"><span>SAN</span><i>→</i><span>LAS</span></div>
+      <div class="bigtime">11:55 AM → 1:15 PM</div>
+      <p class="lead">Then we check into <b>The Venetian</b>: a huge ~1,100 sq ft two-queen suite, canals, bridges and gondolas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-night art-cinema art-sphere">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="Sphere Las Vegas photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Sphere_(54760281448).jpg?width=1600" alt="Sphere Las Vegas"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sphere_(53637340783).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sphere_-_Las_Vegas_(53685825749).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_Las_Vegas_(29899096854).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">THU NIGHT · 7:00 PM</span>
+      <h2>Wizard of Oz<br>at Sphere.</h2>
+      <p class="lead">Not a normal movie screen. Expect a gigantic immersive picture plus sound, lighting, wind, mist and seat effects.</p>
+      <div class="seatbox"><b>Section 306 · Row 9 · Seats 10–11</b><span>Doors open 45 minutes early · no late seating</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-sky art-magazine art-venetian">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="The Venetian Grand Canal and gondolas photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Actual_Venetian_gondola_at_the_Grand_Canal_Shoppes,_Las_Vegas.jpg?width=1600" alt="The Venetian Grand Canal and gondolas"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_exterior_and_gondola_ride.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Gondola_at_the_Venetian,_Las_Vegas.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_Las_Vegas_(29899096854).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">FRI · NOV 27 · MORNING</span>
+      <h2>Venice…<br>in Las Vegas.</h2>
+      <p class="lead">Friday starts slowly at our own hotel. We can explore the Grand Canal, bridges, painted sky and gondolas before heading out.</p>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">🥐</span><span>Easy breakfast and a relaxed morning.</span></div>
+        <div class="bullet"><span class="emoji">🚣</span><span>Walk the Grand Canal Shoppes and watch the gondolas.</span></div>
+        <div class="bullet"><span class="emoji">🏨</span><span>Then come back later for a real hotel break before the evening show.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-omega omega-redesign art-magazine art-omega">
+  <div class="layout">
+    <div class="gallery" aria-label="Omega Mart photo gallery">
+      <div class="hero-photo"><img src="https://cdn.prod.website-files.com/5dad7a19f43e6f31a9e92718/672526a70fedcfd795db6d15_Jan%202024_LAS%20Evergreen_Atlas%20Media_079.webp" alt="The surreal grocery aisles inside Omega Mart"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://cdn.prod.website-files.com/5dad7a19f43e6f31a9e92718/672526a68251cb27caa3d92d_20211012_CDV_OM_0254_UNRETOUCHED.webp" alt="A hidden world beyond the Omega Mart store"></div>
+        <div class="thumb"><img src="https://cdn.prod.website-files.com/5dad7a19f43e6f31a9e92718/672526a796e018e32ef9ec74_OmegaMart-MeowWolf-Jan2024-AtlasMedia_281_NSEdit.webp" alt="Interactive installations inside Omega Mart"></div>
+        <div class="thumb"><img src="https://cdn.prod.website-files.com/5dad7a19f43e6f31a9e92718/672526a79c82803f66735d9c_Jan%202024_LAS%20Evergreen_Atlas%20Media_263.webp" alt="A colorful immersive room inside Omega Mart"></div>
+      </div>
+    </div>
+    <div class="copy omega-copy">
+      <span class="kicker">FRI · NOV 27 · LATE MORNING</span>
+      <div class="omega-logo">OMEGA MART</div>
+      <h2>Looks like a store.<br>It isn’t.</h2>
+      <p class="lead">You walk into a ridiculous supermarket full of fake products — then discover doors and passages into a much stranger world.</p>
+
+      <div class="omega-steps">
+        <div class="omega-step store"><span>1</span><b>SHOP</b><small>Browse weird products and signs.</small></div>
+        <div class="omega-step portal"><span>2</span><b>DISCOVER</b><small>Open doors and find hidden portals.</small></div>
+        <div class="omega-step weird"><span>3</span><b>EXPLORE</b><small>Follow the mystery into surreal rooms.</small></div>
+      </div>
+
+      <div class="omega-footer">
+        <span class="timepill">~11:00 AM–1:30 PM</span>
+        <span class="omega-note">🧩 Optional: Omega Access Card mystery</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-water art-magazine art-o">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="Bellagio and the O theater photo gallery">
+      <div class="hero-photo"><img src="https://www.rateyourseats.com/assets/images/forblog/where-to-sit-for-cirque-du-soleil/1702494373_90069281.jpg" alt="Bellagio and the O theater"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bellagio_fountains_in_Las_Vegas.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Fountains_of_Bellagio._Las_Vegas._(37423580540).jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Fountains_of_Bellagio_(5).jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">FRI · NOV 27 · 6:30 PM</span>
+      <h2>O at Bellagio.</h2>
+      <p class="lead">A theater built around water: divers, aerial performers and acrobatics appearing above, on and inside the stage.</p>
+      <div class="seatbox"><b>Section 103 · Row H · Seats 4–5</b><span>Our Friday-night show</span></div>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">💦</span><span>The stage can turn from solid floor into a deep pool.</span></div>
+        <div class="bullet"><span class="emoji">🤸</span><span>Expect diving, aerial acts and synchronized movement.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide art-expedition art-hoover">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="Hoover Dam and its power plant photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hoover_Dam.jpg?width=1600" alt="Hoover Dam and its power plant"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hoover_dam,_generators.png?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Turbine_Deck_Hydroelectric_Power_Plant.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hoover_Dam's_Generators.jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">SAT · NOV 28 · MORNING</span>
+      <h2>Inside<br>Hoover Dam.</h2>
+      <p class="lead">We’re getting up early, driving out of Las Vegas and trying for the full Guided Dam Tour.</p>
+      <div class="bullets">
+        <div class="bullet"><span class="emoji">🚙</span><span>Hertz pickup at The Venetian: <b>7:30 AM</b>.</span></div>
+        <div class="bullet"><span class="emoji">⚡</span><span>The full Dam Tour goes deeper inside and includes the Power Plant Tour.</span></div>
+        <div class="bullet"><span class="emoji">🎟️</span><span>Full-tour tickets are bought <b>in person</b>, first-come, first-served.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-fire art-theater art-ka">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="KÀ theater and MGM Grand photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/K%C3%A0_Theater_-_Elizabeth_K._Joseph.jpg?width=1600" alt="KÀ Theatre at MGM Grand"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mgm_grand_closeup.jpg?width=800" alt="MGM Grand exterior at night"></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/20080404-Vegas-MGMGrand-Day.jpg?width=800" alt="MGM Grand exterior in daylight"></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/MGM_Grand_(7979963072).jpg?width=800" alt="MGM Grand lobby interior"></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">SAT · NOV 28 · 7:00 PM</span>
+      <h2>KÀ.</h2>
+      <p class="lead">Big action, martial-arts energy and aerial performers — plus a giant stage that tilts, moves and becomes part of the story.</p>
+      <div class="seatbox"><b>Section 102 · Row M · Seats 14–15</b><span>Great center view of the full moving stage</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide theme-purple art-postcard art-home">
+  <div class="layout">
+    
+    <div class="gallery" aria-label="Highlights from Lily's Thanksgiving trip photo gallery">
+      <div class="hero-photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Sphere_(54760281448).jpg?width=1600" alt="Highlights from Lily's Thanksgiving trip"></div>
+      <div class="thumbs">
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Venetian_exterior_and_gondola_ride.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Hoover_Dam.jpg?width=800" alt=""></div>
+        <div class="thumb"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/SeaWorld_San_Diego.jpg?width=800" alt=""></div>
+      </div>
+    </div>
+    <div class="copy">
+      <span class="kicker">SUN · NOV 29</span>
+      <h2>Home with<br>a lot of stories.</h2>
+      <div class="route"><span>LAS</span><i>→</i><span>SFO</span></div>
+      <div class="bigtime">11:27 AM → 1:15 PM</div>
+      <p class="lead">United UA1924 · Lily 12E · Dad 12F. The end of an eight-day Thanksgiving adventure.</p>
+      <div class="stickers"><span>LEGO ✓</span><span>SPHERE ✓</span><span>OMEGA ✓</span><span>DAM ✓</span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div class="lightbox" id="imageLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Expanded trip photo">
+  <div class="lightbox-stage">
+    <img id="lightboxImage" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close enlarged photo">×</button>
+    <button type="button" class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+    <button type="button" class="lightbox-nav next" id="lightboxNext" aria-label="Next photo">›</button>
+    <div class="lightbox-tools" aria-label="Image zoom controls">
+      <button type="button" class="lightbox-zoom" id="zoomOut" aria-label="Zoom out">−</button>
+      <button type="button" class="lightbox-zoom" id="zoomReset" aria-label="Reset zoom">1×</button>
+      <button type="button" class="lightbox-zoom" id="zoomIn" aria-label="Zoom in">＋</button>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" aria-label="Slideshow controls">
+  <button type="button" data-nav="prev" aria-label="Previous slide">←</button>
+  <div class="dots" aria-label="Slide navigation"></div>
+  <span class="count"></span>
+  <button type="button" data-nav="next" aria-label="Next slide">→</button>
+</nav>
+<script>
+(() => {
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.querySelector('.dots'), prev=document.querySelector('[data-nav="prev"]'),
+        next=document.querySelector('[data-nav="next"]'), count=document.querySelector('.count'),
+        bar=document.querySelector('.progress span'), deck=document.querySelector('.deck');
+  let index=0, x0=null;
+  slides.forEach((_,i)=>{
+    const b=document.createElement('button'); b.type='button'; b.className='dot';
+    b.setAttribute('aria-label','Go to slide '+(i+1)); b.addEventListener('click',()=>show(i)); dots.appendChild(b);
+  });
+  function show(i){
+    index=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach((s,j)=>{const a=j===index;s.classList.toggle('active',a);s.setAttribute('aria-hidden',a?'false':'true'); if(a)s.scrollTop=0;});
+    [...dots.children].forEach((d,j)=>d.classList.toggle('active',j===index));
+    count.textContent=(index+1)+' / '+slides.length;
+    bar.style.width=(((index+1)/slides.length)*100)+'%';
+    prev.disabled=index===0; next.disabled=index===slides.length-1;
+    const s=slides[index];
+    document.body.dataset.deckStyle =
+      s.classList.contains('art-poster') ? 'poster' :
+      s.classList.contains('art-scrap') ? 'scrap' :
+      s.classList.contains('art-cinema') ? 'cinema' :
+      s.classList.contains('art-magazine') ? 'magazine' :
+      s.classList.contains('art-expedition') ? 'expedition' :
+      s.classList.contains('art-theater') ? 'theater' : 'postcard';
+  }
+  prev.addEventListener('click',()=>show(index-1)); next.addEventListener('click',()=>show(index+1));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown')show(index+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')show(index-1);
+  });
+  deck.addEventListener('touchstart',e=>{x0=e.changedTouches[0].clientX;},{passive:true});
+  deck.addEventListener('touchend',e=>{
+    if(x0===null)return; const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>55)show(index+(dx<0?1:-1)); x0=null;
+  },{passive:true});
+
+  // Image lightbox: tap any major or thumbnail photo to enlarge it.
+  const lightbox=document.getElementById('imageLightbox');
+  const lightboxImage=document.getElementById('lightboxImage');
+  const lightboxCaption=document.getElementById('lightboxCaption');
+  const lightboxClose=document.getElementById('lightboxClose');
+  const lightboxPrev=document.getElementById('lightboxPrev');
+  const lightboxNext=document.getElementById('lightboxNext');
+  const zoomIn=document.getElementById('zoomIn');
+  const zoomOut=document.getElementById('zoomOut');
+  const zoomReset=document.getElementById('zoomReset');
+  let lightboxImages=[], lightboxIndex=0, zoom=1, lbX0=null;
+
+  function setZoom(v){
+    zoom=Math.max(1,Math.min(3,v));
+    lightboxImage.style.transform='scale('+zoom+')';
+    lightboxImage.classList.toggle('zoomed',zoom>1);
+    zoomReset.textContent=zoom.toFixed(zoom%1?1:0)+'×';
+  }
+
+  function currentSlideImages(img){
+    const slide=img.closest('.slide');
+    return [...slide.querySelectorAll('.gallery img')];
+  }
+
+  function renderLightbox(){
+    const img=lightboxImages[lightboxIndex];
+    if(!img)return;
+    lightboxImage.src=img.currentSrc||img.src;
+    const meaningfulAlt=img.alt && img.alt.trim();
+    const slideHeading=img.closest('.slide')?.querySelector('h1,h2')?.textContent?.trim()||'Trip photo';
+    lightboxImage.alt=meaningfulAlt||slideHeading;
+    lightboxCaption.textContent=meaningfulAlt||slideHeading;
+    lightboxPrev.disabled=lightboxImages.length<2;
+    lightboxNext.disabled=lightboxImages.length<2;
+    setZoom(1);
+  }
+
+  function openLightbox(img){
+    lightboxImages=currentSlideImages(img);
+    lightboxIndex=Math.max(0,lightboxImages.indexOf(img));
+    renderLightbox();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    lightboxClose.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+    setZoom(1);
+  }
+
+  function stepPhoto(delta){
+    if(!lightboxImages.length)return;
+    lightboxIndex=(lightboxIndex+delta+lightboxImages.length)%lightboxImages.length;
+    renderLightbox();
+  }
+
+  document.querySelectorAll('.gallery img').forEach(img=>{
+    img.tabIndex=0;
+    img.setAttribute('role','button');
+    img.setAttribute('aria-label',(img.alt||'Trip photo')+' — tap to enlarge');
+    img.addEventListener('click',()=>openLightbox(img));
+    img.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();openLightbox(img);}
+    });
+  });
+
+  lightboxClose.addEventListener('click',closeLightbox);
+  lightboxPrev.addEventListener('click',()=>stepPhoto(-1));
+  lightboxNext.addEventListener('click',()=>stepPhoto(1));
+  zoomIn.addEventListener('click',()=>setZoom(zoom+.5));
+  zoomOut.addEventListener('click',()=>setZoom(zoom-.5));
+  zoomReset.addEventListener('click',()=>setZoom(1));
+  lightboxImage.addEventListener('click',()=>setZoom(zoom===1?2:1));
+
+  lightbox.addEventListener('click',e=>{
+    if(e.target===lightbox)closeLightbox();
+  });
+
+  lightbox.addEventListener('touchstart',e=>{
+    if(e.touches.length===1)lbX0=e.touches[0].clientX;
+  },{passive:true});
+  lightbox.addEventListener('touchend',e=>{
+    if(lbX0===null||zoom>1)return;
+    const dx=e.changedTouches[0].clientX-lbX0;
+    if(Math.abs(dx)>55)stepPhoto(dx<0?1:-1);
+    lbX0=null;
+  },{passive:true});
+
+  document.addEventListener('keydown',e=>{
+    if(!lightbox.classList.contains('open'))return;
+    if(e.key==='Escape')closeLightbox();
+    if(e.key==='ArrowLeft')stepPhoto(-1);
+    if(e.key==='ArrowRight')stepPhoto(1);
+    if(e.key==='+'||e.key==='=')setZoom(zoom+.5);
+    if(e.key==='-')setZoom(zoom-.5);
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
